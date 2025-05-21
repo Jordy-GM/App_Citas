@@ -39,8 +39,26 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'django_drf_docker',
+    'rest_framework.authtoken',
+    'api',
+    'phonenumber_field',
+    
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),  # Aquí dse define que el token dure 1 día
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7), # Token para refrescar dura 7 días
+    # otras opciones que puedas tener...
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,12 +96,16 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  # Especificamos que estamos usando PostgreSQL
+        'NAME': 'app_citas',  # El nombre de tu base de datos en PostgreSQL
+        'USER': 'postgres',  # El nombre de usuario de PostgreSQL
+        'PASSWORD': '14251425',  # La contraseña de ese usuario
+        'HOST': 'localhost',  # Si PostgreSQL está en la misma máquina
+        'PORT': '5432',  # El puerto predeterminado de PostgreSQL
     }
 }
 
-AUTH_USER_MODEL = 'django_drf_docker.User' # Indica a Django usar el modelo personalizado
+#AUTH_USER_MODEL = 'django_drf_docker.User' # Indica a Django usar el modelo personalizado
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
