@@ -9,7 +9,7 @@ class Citas(models.Model):
     fecha = models.DateTimeField(blank=False, null=True, )
     descripcion = models.TextField(max_length=50, blank=False, null=False)
     servicio = models.CharField(max_length=50, blank=False, null=False) # Qué servicio va a recibir (consulta, corte de pelo, etc.).
-    estado = models.CharField(max_length=50, blank=False, null=False) #pendiente, confirmado, cancelado, etc.
+    estado = models.CharField(max_length=50, blank=False, null=False) #pendiente, confirmado, atendido, cancelado, etc.
     notas = models.TextField(max_length=50, blank=True, null=False) #	Notas adicionales (ej: "Traer receta médica").
     
     

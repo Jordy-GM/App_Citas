@@ -15,14 +15,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)     # password solo sera de escritura y no se mostrara en la respuesta 
     empresa = EmpresaSerializer(required=False) #campo opcional para la empresa
 
-    '''
-    #empresa_id = es un campo del modelo Citas que se relaciona con el modelo Empresas
-    empresa_id = serializers.SlugRelatedField( #En lugar de usar un número (ID), se usa un campo legible, como el nombre
-        queryset= Empresas.objects.all(),
-        slug_field='nombre',  #se usa un campo legible, como el nombre
-    )
-    '''
-    
+
+        
     class Meta:
         model = User
         fields = ['username', 'profile_picture', 'email', 'password', 'empresa']

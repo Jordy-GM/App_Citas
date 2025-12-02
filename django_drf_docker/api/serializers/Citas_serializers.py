@@ -5,10 +5,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
 class CitaSerializer(serializers.ModelSerializer):
+    #nombre de la empresa
+    empresa = serializers.CharField(source='empresa.nombre', read_only=True)
     
     class Meta():
         model = Citas
-        fields = ['fecha', 'descripcion', 'servicio', 'estado', 'notas']
+        fields = ['id','fecha', 'descripcion', 'servicio', 'estado', 'notas', 'empresa']
         widgets = {
             'fecha': forms.DateInput(attrs={'type': 'datetime-local'}),  # Cambia el tipo de campo a datetime-local
             'descripcion': forms.Textarea(attrs={'rows': 4, 'cols': 40}),  # Cambia el tipo de campo a textarea
@@ -19,5 +21,7 @@ class CitaSerializer(serializers.ModelSerializer):
             ]),
             
         }
+    
+    
 
     

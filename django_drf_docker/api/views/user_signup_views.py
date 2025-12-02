@@ -4,6 +4,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from ..models.Empresas import Empresas
 from ..serializers.Empresa_serializer import EmpresaSerializer
+from ..docs.decorators.signup_decorator import (
+    signup_get_decorator,
+    signup_post_decorator)
 
 #se crea la vista para el registro de usuarios con la clase personaliable APIView de Django Rest Framework
 
@@ -11,11 +14,12 @@ from ..serializers.Empresa_serializer import EmpresaSerializer
 class signup_User_view(APIView):
     
     #funcion para listar las empresas disponibles
+    @signup_get_decorator
     def get(self, request):
         nombres = Empresas.objects.exclude(nombre__isnull=True).values_list('nombre', flat=True)
         return Response({'empresas disponibles': list(nombres)})
        
-
+    @signup_post_decorator
     def post(self, request):
         
         #request.data contiene los datos enviados por el usuario en el cuerpo del request (como en un formulario POST) Y si todo está bien: crea el objeto User en la base de datos.
