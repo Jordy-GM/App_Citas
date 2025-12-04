@@ -1,15 +1,32 @@
-# Usamos Python 3.10 como base
-FROM python:3.10
+# Usa una imagen base oficial de Python
+FROM python:3.11-slim
 
-# Definir directorio de trabajo
+# Establece variables de entorno
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copiar e instalar dependencias
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Instala dependencias del sistema
+RUN apt-get update && apt-get install -y \
+    gcc \
+    postgresql-client \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copiar el código del proyecto
-COPY . .
+# Copia el archivo de requisitos
+COPY requirements.txt /app/
 
-# Comando por defecto para iniciar Django
+# Instala las dependencias de Python
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+# Copia todo el proyecto
+COPY . /app/
+
+# Expone el puerto 8000
+EXPOSE 8000
+
+# Comando por defecto
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
