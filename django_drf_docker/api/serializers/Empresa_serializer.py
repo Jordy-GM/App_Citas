@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers #type: ignore
 from api.models.Empresas import Empresas
 
 class EmpresaSerializer(serializers.ModelSerializer):
